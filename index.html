@@ -1,0 +1,1073 @@
+
+
+Dictionnaire darija · HTML
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dictionnaire Darija</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Tajawal:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bordeaux:#59072d;
+    --bordeaux-light:#7a1140;
+    --sable:#f2e2b5;
+    --terracotta:#cd8c5d;
+    --rose-clay:#dfb395;
+    --cream:#fef2d0;
+    --ink:#2c0a17;
+    --shadow: 0 10px 30px rgba(89,7,45,0.18);
+  }
+ 
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+ 
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, rgba(205,140,93,0.25), transparent 60%),
+      var(--sable);
+    color:var(--ink);
+    font-family:'Tajawal', sans-serif;
+    min-height:100vh;
+    padding-bottom:80px;
+  }
+ 
+  .zellige-strip{
+    height:26px;
+    width:100%;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='26' viewBox='0 0 52 26'%3E%3Cg fill='none' stroke='%2359072d' stroke-width='1'%3E%3Cpath d='M0 13 L13 0 L26 13 L13 26 Z' fill='%23cd8c5d'/%3E%3Cpath d='M26 13 L39 0 L52 13 L39 26 Z' fill='%23dfb395'/%3E%3Ccircle cx='13' cy='13' r='4' fill='%2359072d'/%3E%3Ccircle cx='39' cy='13' r='4' fill='%2359072d'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat:repeat-x;
+    background-size:52px 26px;
+    opacity:0.9;
+  }
+ 
+  header.gate{
+    position:relative;
+    background:linear-gradient(180deg, var(--bordeaux) 0%, var(--bordeaux-light) 100%);
+    padding:56px 24px 40px;
+    text-align:center;
+    overflow:hidden;
+  }
+  header.gate::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(242,226,181,0.08) 0, transparent 4%),
+      radial-gradient(circle at 85% 30%, rgba(242,226,181,0.08) 0, transparent 4%),
+      radial-gradient(circle at 50% 80%, rgba(242,226,181,0.06) 0, transparent 5%);
+    pointer-events:none;
+  }
+  .lock-toggle{
+    position:absolute;
+    top:18px; right:18px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    background:rgba(242,226,181,0.12);
+    border:1.5px solid rgba(242,226,181,0.4);
+    color:var(--cream);
+    padding:8px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    font-size:12.5px;
+    font-weight:600;
+    z-index:6;
+  }
+  .lock-toggle:hover{ background:rgba(242,226,181,0.22); }
+  .arch-frame{
+    position:relative;
+    max-width:640px;
+    margin:0 auto;
+    padding:38px 30px 26px;
+    background:var(--cream);
+    border:3px solid var(--terracotta);
+    border-radius: 200px 200px 18px 18px;
+    box-shadow: 0 0 0 8px var(--bordeaux), var(--shadow);
+  }
+  .eyebrow{
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    font-size:11px;
+    font-weight:700;
+    color:var(--terracotta);
+    margin:0 0 6px;
+  }
+  h1.title{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:700;
+    font-size:clamp(30px,5.5vw,46px);
+    color:var(--bordeaux);
+    margin:0 0 6px;
+    line-height:1.1;
+    letter-spacing:.01em;
+  }
+  .subtitle{
+    margin:0;
+    font-size:14.5px;
+    color:#7a4a3a;
+    font-weight:400;
+  }
+  .status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:14px;
+    padding:5px 14px;
+    border-radius:999px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    font-weight:500;
+    background:rgba(89,7,45,0.07);
+    color:var(--bordeaux);
+    border:1px solid rgba(89,7,45,0.18);
+    margin-right:6px;
+  }
+  .status-dot{ width:7px; height:7px; border-radius:50%; background:#3f9142; }
+  .status-dot.offline{ background:#b0432c; }
+  .mode-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:14px;
+    padding:5px 14px;
+    border-radius:999px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    font-weight:700;
+    background:rgba(205,140,93,0.18);
+    color:var(--bordeaux);
+    border:1px solid rgba(205,140,93,0.35);
+  }
+ 
+  .search-zone{
+    max-width:760px;
+    margin:-26px auto 0;
+    padding:0 20px;
+    position:relative;
+    z-index:5;
+  }
+  .search-box{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--cream);
+    border:2px solid var(--bordeaux);
+    border-radius:16px;
+    padding:14px 18px;
+    box-shadow:var(--shadow);
+  }
+  .search-box svg{ flex:0 0 auto; opacity:.7; }
+  .search-box input{
+    flex:1;
+    border:none;
+    background:transparent;
+    outline:none;
+    font-family:'Tajawal',sans-serif;
+    font-size:16px;
+    color:var(--ink);
+  }
+  .search-box input::placeholder{ color:#a9836f; }
+  .search-count{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:#a9836f;
+    white-space:nowrap;
+  }
+ 
+  .filters{
+    max-width:900px;
+    margin:18px auto 0;
+    padding:0 20px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    justify-content:center;
+    align-items:center;
+  }
+  .chip{
+    border:1.5px solid var(--terracotta);
+    background:var(--cream);
+    color:var(--bordeaux);
+    border-radius:999px;
+    font-size:13px;
+    font-weight:500;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+  }
+  .chip.active{ background:var(--bordeaux); border-color:var(--bordeaux); }
+  .chip.active .chip-name{ color:var(--cream); }
+  .chip-name{
+    background:none;
+    border:none;
+    padding:7px 6px 7px 14px;
+    cursor:pointer;
+    color:var(--bordeaux);
+    font:inherit;
+    font-weight:600;
+  }
+  .chip-name:hover{ text-decoration:underline; }
+  .chip-tool{
+    background:none;
+    border:none;
+    padding:7px 8px;
+    cursor:pointer;
+    opacity:.55;
+    font-size:12px;
+    color:inherit;
+  }
+  .chip-tool:hover{ opacity:1; }
+  .chip.active .chip-tool{ color:var(--cream); }
+  .chip.add-chip{
+    border-style:dashed;
+    color:var(--terracotta);
+    background:transparent;
+    padding:7px 16px;
+    cursor:pointer;
+    font-weight:600;
+  }
+  .chip.add-chip:hover{ background:var(--rose-clay); }
+ 
+  main{
+    max-width:1100px;
+    margin:34px auto 0;
+    padding:0 20px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(240px,1fr));
+    gap:20px;
+  }
+ 
+  .card{
+    position:relative;
+    background:var(--cream);
+    border:1.5px solid var(--rose-clay);
+    border-radius: 120px 120px 14px 14px;
+    padding:26px 18px 18px;
+    text-align:center;
+    box-shadow:0 4px 14px rgba(89,7,45,0.08);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{
+    transform:translateY(-4px);
+    box-shadow: var(--shadow);
+    border-color:var(--terracotta);
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    top:10px; left:50%;
+    transform:translateX(-50%) rotate(45deg);
+    width:9px; height:9px;
+    background:var(--terracotta);
+  }
+  .card .cat-tag{
+    display:inline-block;
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--bordeaux);
+    background:rgba(205,140,93,0.22);
+    padding:3px 10px;
+    border-radius:999px;
+    margin-bottom:10px;
+  }
+  .card .latin{
+    font-family:'Cormorant Garamond', serif;
+    font-size:26px;
+    font-weight:700;
+    color:var(--bordeaux);
+    margin:0 0 4px;
+  }
+  .card .phon{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:#a9836f;
+    margin:0 0 10px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+  .card .fr{
+    font-size:15px;
+    font-weight:500;
+    color:var(--ink);
+    margin:0 0 8px;
+  }
+  .card .example{
+    font-size:12.5px;
+    color:#8a5a48;
+    font-style:italic;
+    border-top:1px dashed var(--rose-clay);
+    padding-top:8px;
+    margin-top:4px;
+  }
+  .card .actions{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin-top:12px;
+  }
+  .icon-btn{
+    border:none;
+    background:rgba(89,7,45,0.08);
+    color:var(--bordeaux);
+    width:30px; height:30px;
+    border-radius:9px;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:.15s;
+  }
+  .icon-btn:hover{ background:var(--bordeaux); color:var(--cream); }
+  .icon-btn.danger:hover{ background:#8c1f36; }
+ 
+  .empty-state{
+    grid-column:1/-1;
+    text-align:center;
+    padding:50px 20px;
+    color:#a9836f;
+  }
+  .empty-state .big{
+    font-family:'Cormorant Garamond', serif;
+    font-size:24px;
+    font-weight:700;
+    color:var(--bordeaux);
+    margin-bottom:6px;
+  }
+ 
+  .toolbar{
+    max-width:1100px;
+    margin:34px auto 0;
+    padding:0 20px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+  }
+  .btn{
+    font-family:'Tajawal',sans-serif;
+    font-weight:700;
+    font-size:13.5px;
+    border-radius:11px;
+    padding:11px 20px;
+    cursor:pointer;
+    border:1.5px solid transparent;
+    transition:.15s;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn-primary{ background:var(--bordeaux); color:var(--cream); }
+  .btn-primary:hover{ background:var(--bordeaux-light); }
+  .btn-outline{ background:transparent; border-color:var(--terracotta); color:var(--bordeaux); }
+  .btn-outline:hover{ background:var(--rose-clay); }
+  .btn-ghost{ background:transparent; color:#8a5a48; border-color:transparent; text-decoration:underline; }
+  .btn[disabled]{ opacity:.4; cursor:not-allowed; }
+ 
+  input[type=file]{ display:none; }
+ 
+  .overlay{
+    position:fixed; inset:0;
+    background:rgba(44,10,23,0.55);
+    backdrop-filter:blur(2px);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index:50;
+    padding:20px;
+  }
+  .overlay.open{ display:flex; }
+  .modal{
+    background:var(--cream);
+    border-radius:22px;
+    border:3px solid var(--bordeaux);
+    max-width:480px;
+    width:100%;
+    max-height:88vh;
+    overflow-y:auto;
+    padding:28px 26px 24px;
+    box-shadow:var(--shadow);
+  }
+  .modal h2{
+    font-family:'Cormorant Garamond', serif;
+    color:var(--bordeaux);
+    margin:0 0 4px;
+    font-size:24px;
+    font-weight:700;
+  }
+  .modal .modal-sub{ font-size:12.5px; color:#a9836f; margin:0 0 18px;}
+  .field{ margin-bottom:14px; }
+  .field label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    color:var(--bordeaux);
+    margin-bottom:5px;
+    letter-spacing:.02em;
+  }
+  .field input, .field select, .field textarea{
+    width:100%;
+    border:1.5px solid var(--rose-clay);
+    background:#fffaf0;
+    border-radius:10px;
+    padding:10px 12px;
+    font-family:'Tajawal', sans-serif;
+    font-size:14.5px;
+    color:var(--ink);
+    outline:none;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{ border-color:var(--terracotta); }
+  .field textarea{ resize:vertical; min-height:56px; }
+  .modal-actions{
+    display:flex; gap:10px; justify-content:flex-end; margin-top:20px;
+  }
+  .modal-actions .btn-ghost{ margin-inline-end:auto; }
+  .hint{ font-size:12px; color:#a9836f; margin-top:-6px; margin-bottom:14px; }
+ 
+  .fab{
+    position:fixed;
+    bottom:26px; right:26px;
+    width:60px; height:60px;
+    border-radius:50%;
+    background:var(--bordeaux);
+    color:var(--cream);
+    border:3px solid var(--cream);
+    font-size:28px;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+    display:flex; align-items:center; justify-content:center;
+    z-index:20;
+    transition:.15s;
+  }
+  .fab:hover{ background:var(--bordeaux-light); transform:scale(1.05); }
+  .fab.hidden{ display:none; }
+ 
+  .toast{
+    position:fixed;
+    bottom:26px; left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:var(--bordeaux);
+    color:var(--cream);
+    padding:12px 22px;
+    border-radius:12px;
+    font-size:13.5px;
+    font-weight:500;
+    box-shadow:var(--shadow);
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+    z-index:100;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+ 
+  footer{
+    text-align:center;
+    margin-top:50px;
+    padding:20px;
+    font-size:11.5px;
+    color:#a9836f;
+  }
+ 
+  @media (max-width:480px){
+    .arch-frame{ padding:30px 18px 20px; border-radius:120px 120px 14px 14px; }
+    .card{ padding:24px 14px 16px; }
+    .lock-toggle{ position:static; margin:0 auto 16px; width:fit-content; }
+  }
+ 
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+ 
+<header class="gate">
+  <button class="lock-toggle" id="lockToggle">🔒 <span id="lockLabel">Mode lecture</span></button>
+  <div class="arch-frame">
+    <p class="eyebrow">Casbah · Zellige · El Djazaïr</p>
+    <h1 class="title">Dictionnaire Darija</h1>
+    <p class="subtitle">Ton dictionnaire personnel — mots, catégories, tout est à toi</p>
+    <div>
+      <span class="status-pill"><span class="status-dot" id="statusDot"></span><span id="statusText">Connexion vérifiée…</span></span>
+      <span class="mode-pill" id="modePill">Lecture seule</span>
+    </div>
+  </div>
+</header>
+<div class="zellige-strip"></div>
+ 
+<div class="search-zone">
+  <div class="search-box">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59072d" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input type="text" id="searchInput" placeholder="Chercher un mot… translittération ou français" autocomplete="off">
+    <span class="search-count" id="searchCount"></span>
+  </div>
+</div>
+ 
+<div class="filters" id="filters"></div>
+ 
+<main>
+  <div class="grid" id="grid"></div>
+</main>
+ 
+<div class="toolbar">
+  <button class="btn btn-outline" id="exportBtn">⇩ Exporter (sauvegarde JSON)</button>
+  <button class="btn btn-outline" id="importBtn" disabled>⇧ Importer une sauvegarde</button>
+  <input type="file" id="importFile" accept="application/json">
+  <button class="btn btn-ghost" id="resetBtn" disabled>Réinitialiser les données</button>
+</div>
+ 
+<footer>Fonctionne 100% hors ligne · données stockées uniquement sur cet appareil</footer>
+ 
+<button class="fab hidden" id="fabAdd" title="Ajouter un mot">+</button>
+ 
+<!-- Modale mot de passe -->
+<div class="overlay" id="pwOverlay">
+  <div class="modal">
+    <h2 id="pwTitle">Débloquer l'édition</h2>
+    <p class="modal-sub" id="pwSub">Entre ton mot de passe pour ajouter, modifier ou supprimer des mots.</p>
+    <div class="field">
+      <label id="pwLabel">Mot de passe</label>
+      <input type="password" id="fPassword" placeholder="••••••••">
+    </div>
+    <div class="field" id="pwConfirmField" style="display:none;">
+      <label>Confirmer le mot de passe</label>
+      <input type="password" id="fPasswordConfirm" placeholder="••••••••">
+    </div>
+    <p class="hint" id="pwHint"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="pwCancel">Annuler</button>
+      <button class="btn btn-primary" id="pwSubmit">Déverrouiller</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- Modale mot -->
+<div class="overlay" id="wordOverlay">
+  <div class="modal">
+    <h2 id="wordModalTitle">Ajouter un mot</h2>
+    <p class="modal-sub">Remplis ce que tu as — le mot en darija (translittéré) est obligatoire.</p>
+    <div class="field">
+      <label>Mot en darija (translittéré)</label>
+      <input type="text" id="fLatin" placeholder="ex : bezzef">
+    </div>
+    <div class="field">
+      <label>Prononciation / notes phonétiques (optionnel)</label>
+      <input type="text" id="fPhon" placeholder="ex : BEZ-zef">
+    </div>
+    <div class="field">
+      <label>Traduction en français</label>
+      <input type="text" id="fFrench" placeholder="ex : beaucoup">
+    </div>
+    <div class="field">
+      <label>Catégorie</label>
+      <select id="fCategory"></select>
+    </div>
+    <div class="field">
+      <label>Exemple d'usage (optionnel)</label>
+      <textarea id="fExample" placeholder="Une phrase pour illustrer le mot…"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="wordCancel">Annuler</button>
+      <button class="btn btn-primary" id="wordSave">Enregistrer</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- Modale catégorie (ajout / renommage) -->
+<div class="overlay" id="catOverlay">
+  <div class="modal">
+    <h2 id="catModalTitle">Nouvelle catégorie</h2>
+    <p class="modal-sub">Organise tes mots comme tu veux.</p>
+    <div class="field">
+      <label>Nom de la catégorie</label>
+      <input type="text" id="fCatName" placeholder="ex : Cuisine, Salutations, Marché…">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="catCancel">Annuler</button>
+      <button class="btn btn-primary" id="catSave">Enregistrer</button>
+    </div>
+  </div>
+</div>
+ 
+<div class="toast" id="toast"></div>
+ 
+<script>
+(function(){
+  "use strict";
+ 
+  const STORAGE_KEY = "darija_dict_words_v2";
+  const CAT_KEY = "darija_dict_categories_v2";
+  const PW_KEY = "darija_dict_pwhash_v2";
+  const UNLOCK_KEY = "darija_dict_unlocked_v2"; // sessionStorage
+ 
+  const DEFAULT_CATEGORIES = ["Salutations","Famille","Nourriture","Marché","Expressions"];
+  const DEFAULT_WORDS = [
+    {id:"w1", latin:"salam", phon:"sa-LAM", french:"bonjour / paix", category:"Salutations", example:"Salam, kidayer ? — Bonjour, comment vas-tu ?"},
+    {id:"w2", latin:"choukran", phon:"chouk-RAN", french:"merci", category:"Salutations", example:""},
+    {id:"w3", latin:"khobz", phon:"KHOBZ", french:"pain", category:"Nourriture", example:"Chri khobz men lfarran — Achète du pain à la boulangerie"},
+    {id:"w4", latin:"bezzef", phon:"BEZ-zef", french:"beaucoup", category:"Expressions", example:"Nhebbek bezzef — Je t'aime beaucoup"},
+    {id:"w5", latin:"yemma", phon:"YEM-ma", french:"maman", category:"Famille", example:""}
+  ];
+ 
+  let words = [];
+  let categories = [];
+  let activeCategory = "Toutes";
+  let editingWordId = null;
+  let editingCatOld = null; // nom de catégorie en cours de renommage
+  let unlocked = false;
+  let pwFlowMode = null; // "setup" | "unlock"
+  let pendingAction = null; // fonction à exécuter après déverrouillage
+ 
+  const $ = (sel) => document.querySelector(sel);
+  const grid = $("#grid");
+  const filtersEl = $("#filters");
+  const searchInput = $("#searchInput");
+  const searchCount = $("#searchCount");
+  const toast = $("#toast");
+ 
+  function uid(){ return "w" + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+ 
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(()=> toast.classList.remove("show"), 2200);
+  }
+ 
+  /* ---------- hash simple (dissuasif, pas cryptographique) ---------- */
+  function simpleHash(str){
+    let h = 0;
+    for(let i=0;i<str.length;i++){
+      h = (Math.imul(31,h) + str.charCodeAt(i)) | 0;
+    }
+    return "h" + h.toString(36) + str.length;
+  }
+ 
+  function load(){
+    try{
+      const w = localStorage.getItem(STORAGE_KEY);
+      const c = localStorage.getItem(CAT_KEY);
+      words = w ? JSON.parse(w) : DEFAULT_WORDS.slice();
+      categories = c ? JSON.parse(c) : DEFAULT_CATEGORIES.slice();
+      if(!w) save();
+    }catch(e){
+      words = DEFAULT_WORDS.slice();
+      categories = DEFAULT_CATEGORIES.slice();
+    }
+    unlocked = sessionStorage.getItem(UNLOCK_KEY) === "1";
+  }
+ 
+  function save(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(words));
+    localStorage.setItem(CAT_KEY, JSON.stringify(categories));
+  }
+ 
+  function escapeHtml(str){
+    return (str||"").replace(/[&<>"']/g, s => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"
+    }[s]));
+  }
+ 
+  /* ================= VERROU D'ÉDITION ================= */
+ 
+  function hasPassword(){ return !!localStorage.getItem(PW_KEY); }
+ 
+  function updateLockUI(){
+    const btn = $("#lockToggle");
+    const label = $("#lockLabel");
+    const modePill = $("#modePill");
+    if(unlocked){
+      btn.innerHTML = "🔓 <span id=\"lockLabel\">Verrouiller</span>";
+      modePill.textContent = "Édition activée";
+      $("#fabAdd").classList.remove("hidden");
+      $("#importBtn").disabled = false;
+      $("#resetBtn").disabled = false;
+    } else {
+      btn.innerHTML = "🔒 <span id=\"lockLabel\">Mode lecture</span>";
+      modePill.textContent = "Lecture seule";
+      $("#fabAdd").classList.add("hidden");
+      $("#importBtn").disabled = true;
+      $("#resetBtn").disabled = true;
+    }
+  }
+ 
+  function requireUnlock(action){
+    if(unlocked){ action(); return; }
+    pendingAction = action;
+    openPasswordModal(hasPassword() ? "unlock" : "setup");
+  }
+ 
+  const pwOverlay = $("#pwOverlay");
+  const fPassword = $("#fPassword");
+  const fPasswordConfirm = $("#fPasswordConfirm");
+ 
+  function openPasswordModal(mode){
+    pwFlowMode = mode;
+    fPassword.value = "";
+    fPasswordConfirm.value = "";
+    if(mode === "setup"){
+      $("#pwTitle").textContent = "Créer ton mot de passe d'édition";
+      $("#pwSub").textContent = "C'est la première fois : choisis un mot de passe. Il sera demandé à chaque déverrouillage, ici et sur les autres appareils/navigateurs où tu ouvres ce fichier.";
+      $("#pwConfirmField").style.display = "block";
+      $("#pwHint").textContent = "Note-le quelque part : il n'y a pas de récupération possible en cas d'oubli.";
+    } else {
+      $("#pwTitle").textContent = "Débloquer l'édition";
+      $("#pwSub").textContent = "Entre ton mot de passe pour ajouter, modifier ou supprimer des mots et catégories.";
+      $("#pwConfirmField").style.display = "none";
+      $("#pwHint").textContent = "";
+    }
+    pwOverlay.classList.add("open");
+    fPassword.focus();
+  }
+  function closePasswordModal(){ pwOverlay.classList.remove("open"); pendingAction = null; }
+ 
+  $("#pwCancel").onclick = closePasswordModal;
+  pwOverlay.addEventListener("click", (e)=>{ if(e.target === pwOverlay) closePasswordModal(); });
+  fPassword.addEventListener("keydown", (e)=>{ if(e.key === "Enter" && pwFlowMode === "unlock") $("#pwSubmit").click(); });
+ 
+  $("#pwSubmit").onclick = () => {
+    const pw = fPassword.value;
+    if(!pw){ showToast("Entre un mot de passe"); return; }
+    if(pwFlowMode === "setup"){
+      const confirmPw = fPasswordConfirm.value;
+      if(pw.length < 4){ showToast("4 caractères minimum"); return; }
+      if(pw !== confirmPw){ showToast("Les mots de passe ne correspondent pas"); return; }
+      localStorage.setItem(PW_KEY, simpleHash(pw));
+      unlocked = true;
+      sessionStorage.setItem(UNLOCK_KEY, "1");
+      updateLockUI();
+      closePasswordModal();
+      showToast("Mot de passe créé, édition déverrouillée");
+      if(pendingAction){ const a = pendingAction; pendingAction = null; a(); }
+    } else {
+      const stored = localStorage.getItem(PW_KEY);
+      if(simpleHash(pw) === stored){
+        unlocked = true;
+        sessionStorage.setItem(UNLOCK_KEY, "1");
+        updateLockUI();
+        closePasswordModal();
+        showToast("Édition déverrouillée");
+        if(pendingAction){ const a = pendingAction; pendingAction = null; a(); }
+      } else {
+        showToast("Mot de passe incorrect");
+      }
+    }
+  };
+ 
+  $("#lockToggle").onclick = () => {
+    if(unlocked){
+      unlocked = false;
+      sessionStorage.removeItem(UNLOCK_KEY);
+      updateLockUI();
+      renderFilters();
+      renderGrid();
+      showToast("Mode lecture activé");
+    } else {
+      requireUnlock(()=>{ renderFilters(); renderGrid(); });
+    }
+  };
+ 
+  /* ================= CATÉGORIES ================= */
+ 
+  function renderFilters(){
+    filtersEl.innerHTML = "";
+    const allChip = document.createElement("div");
+    allChip.className = "chip" + (activeCategory === "Toutes" ? " active" : "");
+    allChip.innerHTML = `<button class="chip-name">Toutes</button>`;
+    allChip.querySelector(".chip-name").onclick = () => { activeCategory = "Toutes"; renderFilters(); renderGrid(); };
+    filtersEl.appendChild(allChip);
+ 
+    categories.forEach(cat => {
+      const chip = document.createElement("div");
+      chip.className = "chip" + (activeCategory === cat ? " active" : "");
+      chip.innerHTML = `<button class="chip-name">${escapeHtml(cat)}</button>` +
+        (unlocked ? `<button class="chip-tool" data-rename title="Renommer">✎</button><button class="chip-tool" data-del title="Supprimer">✕</button>` : "");
+      chip.querySelector(".chip-name").onclick = () => { activeCategory = cat; renderFilters(); renderGrid(); };
+      if(unlocked){
+        chip.querySelector("[data-rename]").onclick = (e) => { e.stopPropagation(); requireUnlock(()=>renameCategory(cat)); };
+        chip.querySelector("[data-del]").onclick = (e) => { e.stopPropagation(); requireUnlock(()=>deleteCategory(cat)); };
+      }
+      filtersEl.appendChild(chip);
+    });
+ 
+    const addChip = document.createElement("button");
+    addChip.className = "chip add-chip";
+    addChip.textContent = "+ Catégorie";
+    addChip.onclick = () => requireUnlock(openCatModalNew);
+    filtersEl.appendChild(addChip);
+  }
+ 
+  function deleteCategory(cat){
+    const count = words.filter(w => w.category === cat).length;
+    const msg = count > 0
+      ? `Supprimer "${cat}" ? ${count} mot(s) passeront en "Sans catégorie".`
+      : `Supprimer la catégorie "${cat}" ?`;
+    if(!confirm(msg)) return;
+    categories = categories.filter(c => c !== cat);
+    words.forEach(w => { if(w.category === cat) w.category = "Sans catégorie"; });
+    if(activeCategory === cat) activeCategory = "Toutes";
+    save();
+    renderFilters();
+    renderGrid();
+    showToast("Catégorie supprimée");
+  }
+ 
+  function renameCategory(cat){
+    editingCatOld = cat;
+    $("#catModalTitle").textContent = "Renommer la catégorie";
+    $("#fCatName").value = cat;
+    catOverlay.classList.add("open");
+    $("#fCatName").focus();
+  }
+ 
+  function openCatModalNew(){
+    editingCatOld = null;
+    $("#catModalTitle").textContent = "Nouvelle catégorie";
+    $("#fCatName").value = "";
+    catOverlay.classList.add("open");
+    $("#fCatName").focus();
+  }
+ 
+  const catOverlay = $("#catOverlay");
+  $("#catCancel").onclick = () => { catOverlay.classList.remove("open"); editingCatOld = null; };
+  catOverlay.addEventListener("click", (e)=>{ if(e.target === catOverlay){ catOverlay.classList.remove("open"); editingCatOld = null; } });
+ 
+  $("#catSave").onclick = () => {
+    const name = $("#fCatName").value.trim();
+    if(!name){ showToast("Donne un nom à la catégorie"); return; }
+    if(editingCatOld){
+      if(name !== editingCatOld && categories.includes(name)){ showToast("Cette catégorie existe déjà"); return; }
+      categories = categories.map(c => c === editingCatOld ? name : c);
+      words.forEach(w => { if(w.category === editingCatOld) w.category = name; });
+      if(activeCategory === editingCatOld) activeCategory = name;
+      showToast("Catégorie renommée");
+    } else {
+      if(categories.includes(name)){ showToast("Cette catégorie existe déjà"); return; }
+      categories.push(name);
+      showToast("Catégorie créée");
+    }
+    save();
+    catOverlay.classList.remove("open");
+    editingCatOld = null;
+    renderFilters();
+    renderGrid();
+  };
+ 
+  /* ================= MOTS ================= */
+ 
+  function currentFiltered(){
+    const q = searchInput.value.trim().toLowerCase();
+    return words.filter(w => {
+      const matchCat = activeCategory === "Toutes" || w.category === activeCategory;
+      if(!matchCat) return false;
+      if(!q) return true;
+      return (w.latin||"").toLowerCase().includes(q)
+        || (w.phon||"").toLowerCase().includes(q)
+        || (w.french||"").toLowerCase().includes(q)
+        || (w.example||"").toLowerCase().includes(q);
+    });
+  }
+ 
+  function renderGrid(){
+    const list = currentFiltered();
+    searchCount.textContent = list.length + (list.length > 1 ? " résultats" : " résultat");
+    grid.innerHTML = "";
+ 
+    if(list.length === 0){
+      grid.innerHTML = `<div class="empty-state">
+        <div class="big">Aucun résultat</div>
+        <div>Essaie une autre recherche${unlocked ? ", ou ajoute ce mot toi-même." : "."}</div>
+      </div>`;
+      return;
+    }
+ 
+    list.forEach(w => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <span class="cat-tag">${escapeHtml(w.category || "Sans catégorie")}</span>
+        <p class="latin">${escapeHtml(w.latin)}</p>
+        ${w.phon ? `<p class="phon">${escapeHtml(w.phon)}</p>` : ""}
+        ${w.french ? `<p class="fr">${escapeHtml(w.french)}</p>` : ""}
+        ${w.example ? `<p class="example">${escapeHtml(w.example)}</p>` : ""}
+        ${unlocked ? `<div class="actions">
+          <button class="icon-btn" data-edit="${w.id}" title="Modifier">✎</button>
+          <button class="icon-btn danger" data-del="${w.id}" title="Supprimer">🗑</button>
+        </div>` : ""}
+      `;
+      grid.appendChild(card);
+    });
+ 
+    grid.querySelectorAll("[data-edit]").forEach(btn=>{
+      btn.onclick = () => requireUnlock(()=>openWordModal(btn.getAttribute("data-edit")));
+    });
+    grid.querySelectorAll("[data-del]").forEach(btn=>{
+      btn.onclick = () => requireUnlock(()=>deleteWord(btn.getAttribute("data-del")));
+    });
+  }
+ 
+  function deleteWord(id){
+    const w = words.find(x => x.id === id);
+    if(!w) return;
+    if(!confirm(`Supprimer "${w.latin}" ?`)) return;
+    words = words.filter(x => x.id !== id);
+    save();
+    renderGrid();
+    showToast("Mot supprimé");
+  }
+ 
+  const wordOverlay = $("#wordOverlay");
+  const fLatin = $("#fLatin"), fPhon = $("#fPhon"), fFrench = $("#fFrench"),
+        fCategory = $("#fCategory"), fExample = $("#fExample");
+ 
+  function fillCategorySelect(){
+    fCategory.innerHTML = "";
+    const list = categories.length ? categories : ["Sans catégorie"];
+    list.forEach(c => {
+      const opt = document.createElement("option");
+      opt.value = c; opt.textContent = c;
+      fCategory.appendChild(opt);
+    });
+  }
+ 
+  function openWordModal(id){
+    editingWordId = id || null;
+    fillCategorySelect();
+    if(id){
+      const w = words.find(x => x.id === id);
+      $("#wordModalTitle").textContent = "Modifier le mot";
+      fLatin.value = w.latin || "";
+      fPhon.value = w.phon || "";
+      fFrench.value = w.french || "";
+      fExample.value = w.example || "";
+      if(w.category && categories.includes(w.category)) fCategory.value = w.category;
+    } else {
+      $("#wordModalTitle").textContent = "Ajouter un mot";
+      fLatin.value = ""; fPhon.value = ""; fFrench.value = ""; fExample.value = "";
+    }
+    wordOverlay.classList.add("open");
+    fLatin.focus();
+  }
+ 
+  function closeWordModal(){ wordOverlay.classList.remove("open"); editingWordId = null; }
+ 
+  $("#fabAdd").onclick = () => requireUnlock(()=>openWordModal(null));
+  $("#wordCancel").onclick = closeWordModal;
+  wordOverlay.addEventListener("click", (e)=>{ if(e.target === wordOverlay) closeWordModal(); });
+ 
+  $("#wordSave").onclick = () => {
+    const latin = fLatin.value.trim();
+    if(!latin){ showToast("Le mot en darija est obligatoire"); fLatin.focus(); return; }
+    const data = {
+      latin,
+      phon: fPhon.value.trim(),
+      french: fFrench.value.trim(),
+      category: fCategory.value || "Sans catégorie",
+      example: fExample.value.trim()
+    };
+    if(editingWordId){
+      const w = words.find(x => x.id === editingWordId);
+      Object.assign(w, data);
+      showToast("Mot mis à jour");
+    } else {
+      words.unshift({ id: uid(), ...data });
+      showToast("Mot ajouté");
+    }
+    save();
+    closeWordModal();
+    renderFilters();
+    renderGrid();
+  };
+ 
+  /* ---------- recherche ---------- */
+  searchInput.addEventListener("input", renderGrid);
+ 
+  /* ---------- export / import ---------- */
+  $("#exportBtn").onclick = () => {
+    const payload = { words, categories, exportedAt: new Date().toISOString() };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "dictionnaire-darija-sauvegarde.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast("Sauvegarde téléchargée");
+  };
+ 
+  $("#importBtn").onclick = () => requireUnlock(()=> $("#importFile").click());
+  $("#importFile").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try{
+        const data = JSON.parse(reader.result);
+        if(!Array.isArray(data.words)) throw new Error("format invalide");
+        const replace = confirm("Remplacer toutes les données actuelles par cette sauvegarde ?\n(Annuler = fusionner avec les données existantes)");
+        if(replace){
+          words = data.words;
+          categories = Array.isArray(data.categories) ? data.categories : categories;
+        } else {
+          const existingIds = new Set(words.map(w=>w.id));
+          data.words.forEach(w => { if(!existingIds.has(w.id)) words.push(w); });
+          (data.categories||[]).forEach(c => { if(!categories.includes(c)) categories.push(c); });
+        }
+        save();
+        renderFilters();
+        renderGrid();
+        showToast("Importation réussie");
+      }catch(err){
+        showToast("Fichier invalide");
+      }
+      e.target.value = "";
+    };
+    reader.readAsText(file);
+  });
+ 
+  $("#resetBtn").onclick = () => {
+    requireUnlock(() => {
+      if(!confirm("Tout supprimer et repartir de zéro ? Cette action est irréversible (pense à exporter avant si besoin).")) return;
+      words = [];
+      categories = [];
+      save();
+      activeCategory = "Toutes";
+      renderFilters();
+      renderGrid();
+      showToast("Données réinitialisées");
+    });
+  };
+ 
+  /* ---------- statut connexion ---------- */
+  function updateStatus(){
+    const dot = $("#statusDot"), text = $("#statusText");
+    if(navigator.onLine){
+      dot.classList.remove("offline");
+      text.textContent = "En ligne";
+    } else {
+      dot.classList.add("offline");
+      text.textContent = "Hors ligne — les données restent disponibles";
+    }
+  }
+  window.addEventListener("online", updateStatus);
+  window.addEventListener("offline", updateStatus);
+ 
+  /* ---------- init ---------- */
+  load();
+  fillCategorySelect();
+  updateLockUI();
+  renderFilters();
+  renderGrid();
+  updateStatus();
+ 
+})();
+</script>
+</body>
+</html>
+ 
